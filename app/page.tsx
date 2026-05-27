@@ -1,6 +1,7 @@
 import Navbar from "./components/Navbar";
 import HeroSection from "./components/HeroSection";
 import ServicesMarquee from "./components/ServicesMarquee";
+import ServicesSection from "./components/ServicesSection";
 
 export default function Page() {
   return (
@@ -8,6 +9,7 @@ export default function Page() {
       <Navbar />
       <HeroSection />
       <ServicesMarquee />
+      <ServicesSection />
     </main>
   );
 }

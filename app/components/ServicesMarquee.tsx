@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { motion, useAnimationFrame, useMotionValue, useTransform } from "framer-motion";
 
 const services = [
@@ -14,26 +14,26 @@ const services = [
     "HEADLESS CMS",
 ];
 
-function MarqueeTrack({ speed = 60 }: { speed?: number }) {
+function MarqueeTrack({ speed = 65 }: { speed?: number }) {
     const baseX = useMotionValue(0);
     const trackRef = useRef<HTMLDivElement>(null);
+    // Cache half-width so we never read the DOM inside the animation loop
+    const halfWidthRef = useRef<number>(0);
+
+    useEffect(() => {
+        if (trackRef.current) {
+            halfWidthRef.current = trackRef.current.scrollWidth / 2;
+        }
+    }, []);
 
     useAnimationFrame((_, delta) => {
-        // delta is ms since last frame — move at `speed` px/s
-        baseX.set(baseX.get() - (speed * delta) / 1000);
-
-        if (trackRef.current) {
-            const halfWidth = trackRef.current.scrollWidth / 2;
-            // Reset when we've scrolled one full copy width
-            if (Math.abs(baseX.get()) >= halfWidth) {
-                baseX.set(0);
-            }
-        }
+        const next = baseX.get() - (speed * delta) / 1000;
+        // Reset using cached value — no DOM read
+        baseX.set(halfWidthRef.current > 0 && Math.abs(next) >= halfWidthRef.current ? 0 : next);
     });
 
     const x = useTransform(baseX, (v) => `${v}px`);
 
-    // Build one "copy" of the list
     const copy = services.map((service, i) => (
         <span key={i} className="inline-flex items-center shrink-0">
             <span className="text-[11px] font-bold tracking-[0.22em] uppercase text-black">
@@ -50,7 +50,6 @@ function MarqueeTrack({ speed = 60 }: { speed?: number }) {
                 style={{ x }}
                 className="flex whitespace-nowrap will-change-transform"
             >
-                {/* Two identical copies — second one picks up seamlessly */}
                 <span className="inline-flex">{copy}</span>
                 <span className="inline-flex">{copy}</span>
             </motion.div>

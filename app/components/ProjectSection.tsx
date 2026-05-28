@@ -5,9 +5,6 @@ import Image from "next/image";
 import {
     motion,
     AnimatePresence,
-    useAnimationFrame,
-    useMotionValue,
-    useTransform,
 } from "framer-motion";
 import projects from "../data/Project";
 

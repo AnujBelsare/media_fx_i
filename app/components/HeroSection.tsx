@@ -25,7 +25,7 @@ export default function HeroSection() {
                 <div className="flex flex-col items-center text-center">
 
                     {/* Eyebrow tag */}
-                    <span className="inline-block mb-6 px-3 py-1 bg-[#e8c73226] text-amber-400 text-[10px] tracking-[0.22em] uppercase rounded-full">
+                    <span className="inline-block mb-6 px-3 py-1 bg-[#e8c73226] backdrop-blur-[0.5px] text-amber-400 text-[10px] tracking-[0.22em] uppercase rounded-full">
                         Digital Agency
                     </span>
 

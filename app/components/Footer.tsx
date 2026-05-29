@@ -24,7 +24,7 @@ function Footer() {
 
                     {/* Services */}
                     <div className='flex flex-col gap-1'>
-                        <span className='font-sans font-black text-black text-[11px] tracking-[0.18em] uppercase mb-1'>
+                        <span className='font-sans font-black text-black/80 text-[11px] tracking-[0.18em] uppercase mb-1'>
                             Services
                         </span>
                         {['Strategy', 'Design', 'Development'].map((item) => (
@@ -42,7 +42,7 @@ function Footer() {
 
                     {/* Company */}
                     <div className='flex flex-col gap-1'>
-                        <span className='font-sans font-black text-black text-[11px] tracking-[0.18em] uppercase mb-1'>
+                        <span className='font-sans font-black text-black/80 text-[11px] tracking-[0.18em] uppercase mb-1'>
                             Company
                         </span>
                         {['Home', 'Services', 'Work', 'About Us'].map((item) => (
@@ -60,7 +60,7 @@ function Footer() {
 
                     {/* Connect */}
                     <div className='flex flex-col gap-1'>
-                        <span className='font-sans font-black text-black text-[11px] tracking-[0.18em] uppercase mb-1'>
+                        <span className='font-sans font-black text-black/80 text-[11px] tracking-[0.18em] uppercase mb-1'>
                             Connect
                         </span>
                         {['Twitter / X', 'Instagram', 'LinkedIn'].map((item) => (
@@ -86,7 +86,7 @@ function Footer() {
                 {/* Large Watermark Text */}
                 <div
                     className='font-display font-semibold text-[#00000022] select-none pointer-events-none leading-none whitespace-nowrap'
-                    style={{ fontSize: 'clamp(4rem, 7.6vw, 6rem)', letterSpacing: '-0.02em' }}
+                    style={{ fontSize: 'clamp(3rem, 6vw, 6rem)', letterSpacing: '-0.02em' }}
                     aria-hidden='true'
                 >
                     Media_Fx_I

@@ -56,20 +56,29 @@ export default function ProjectSection() {
                             key={i}
                             onMouseEnter={() => setActiveIndex(i)}
                             onMouseLeave={() => setActiveIndex(null)}
-                            className="group relative w-full flex items-center justify-between py-6 md:py-8 border-b border-white/5 cursor-pointer hover:bg-white/2 transition-colors duration-300 px-8"
+                            className="group relative w-full flex flex-col md:flex-row md:items-center justify-between py-6 md:py-8 border-b border-white/5 cursor-pointer hover:bg-white/2 transition-colors duration-300 px-8"
                         >
+                            {/* Left Side: Number + Title */}
                             {/* Left Side: Number + Title */}
                             <div className="flex items-center gap-12 md:gap-24">
                                 <span className="text-[#857e30] text-xs font-mono group-hover:text-[#888] transition-colors">
                                     {project.number}
                                 </span>
-                                <h2 className="text-[#888] font-display group-hover:text-white text-base md:text-xl lg:text-2xl font-light transition-colors duration-300 uppercase tracking-wide">
-                                    {project.title}
-                                </h2>
+
+                                <div className="flex flex-col">
+                                    <h2 className="text-[#888] font-display group-hover:text-white text-base md:text-xl lg:text-2xl font-light transition-colors duration-300 uppercase tracking-wide">
+                                        {project.title}
+                                    </h2>
+
+                                    {/* Mobile Category */}
+                                    <span className="md:hidden mt-2 text-[#555] text-[10px] tracking-[0.2em] uppercase group-hover:text-[#888] transition-colors">
+                                        {project.category}
+                                    </span>
+                                </div>
                             </div>
 
-                            {/* Right Side: Category */}
-                            <div className="flex items-center text-right">
+                            {/* Desktop Category */}
+                            <div className="hidden md:flex items-center justify-center text-right">
                                 <span className="text-[#555] text-[10px] md:text-xs tracking-[0.2em] uppercase group-hover:text-[#888] transition-colors">
                                     {project.category}
                                 </span>

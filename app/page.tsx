@@ -3,6 +3,7 @@ import HeroSection from "./components/HeroSection";
 import ServicesMarquee from "./components/ServicesMarquee";
 import ServicesSection from "./components/ServicesSection";
 import ProjectSection from "./components/ProjectSection";
+import ContactFooter from "./components/ContactFooter";
 
 export default function Page() {
   return (
@@ -12,6 +13,7 @@ export default function Page() {
       <ServicesMarquee />
       <ServicesSection />
       <ProjectSection />
+      <ContactFooter />
     </main>
   );
 }

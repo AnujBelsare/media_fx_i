@@ -4,6 +4,7 @@ import ServicesMarquee from "./components/ServicesMarquee";
 import ServicesSection from "./components/ServicesSection";
 import ProjectSection from "./components/ProjectSection";
 import ContactFooter from "./components/ContactFooter";
+import Footer from "./components/Footer";
 
 export default function Page() {
   return (
@@ -14,6 +15,7 @@ export default function Page() {
       <ServicesSection />
       <ProjectSection />
       <ContactFooter />
+      <Footer />
     </main>
   );
 }

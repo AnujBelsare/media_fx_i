@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Inter_Tight, Playfair_Display } from "next/font/google";
 import "./globals.css";
+import SmoothScrollProvider from "./components/SmoothScrollProvider";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -40,6 +41,7 @@ export default function RootLayout({
       `}
     >
       <body className="min-h-screen font-sans bg-background text-foreground" suppressHydrationWarning>
+        <SmoothScrollProvider />
         {children}
       </body>
     </html>

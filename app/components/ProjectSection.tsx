@@ -1,93 +1,267 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import Image from "next/image";
-import {
-    motion,
-    AnimatePresence,
-} from "framer-motion";
+import Link from "next/link";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import projects from "../data/Project";
 
-export default function ProjectSection() {
-    const [activeIndex, setActiveIndex] = useState<number | null>(null);
+gsap.registerPlugin(ScrollTrigger);
+
+/* ── Cursor follower — only shown when hovering a card ── */
+function CursorFollower({ visible }: { visible: boolean }) {
+    const ref = useRef<HTMLDivElement>(null);
+    const pos = useRef({ x: 0, y: 0 });
+    const cur = useRef({ x: 0, y: 0 });
+    const rafId = useRef<number>(0);
+
+    useEffect(() => {
+        const move = (e: MouseEvent) => { pos.current = { x: e.clientX, y: e.clientY }; };
+        window.addEventListener("mousemove", move);
+        const loop = () => {
+            cur.current.x += (pos.current.x - cur.current.x) * 0.1;
+            cur.current.y += (pos.current.y - cur.current.y) * 0.1;
+            if (ref.current) {
+                ref.current.style.transform = `translate(${cur.current.x - 50}px,${cur.current.y - 50}px)`;
+            }
+            rafId.current = requestAnimationFrame(loop);
+        };
+        rafId.current = requestAnimationFrame(loop);
+        return () => {
+            window.removeEventListener("mousemove", move);
+            cancelAnimationFrame(rafId.current);
+        };
+    }, []);
 
     return (
-        <section className="relative w-full bg-[#111] overflow-hidden min-h-screen flex flex-col text-white font-sans">
+        <div
+            ref={ref}
+            aria-hidden
+            className="pointer-events-none fixed top-0 left-0 z-[9999] w-[100px] h-[100px] flex items-center justify-center"
+            style={{ opacity: visible ? 1 : 0, transition: "opacity 0.2s ease" }}
+        >
+            <div className="w-full h-full rounded-full bg-black flex items-center justify-center">
+                <span className="text-white text-[8px] font-bold tracking-[0.18em] uppercase text-center leading-tight px-2">
+                    View<br />Work
+                </span>
+            </div>
+        </div>
+    );
+}
 
-            {/* ── Full-screen background image (Changes on Hover) ── */}
-            <div className="absolute inset-0 z-0 pointer-events-none">
-                <AnimatePresence mode="wait">
-                    {activeIndex !== null && (
-                        <motion.div
-                            key={projects[activeIndex].image}
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ duration: 0.2, ease: "easeInOut" }}
-                            className="absolute inset-0"
-                        >
-                            <Image
-                                src={projects[activeIndex].image}
-                                alt={projects[activeIndex].title}
-                                fill
-                                className="object-cover object-center"
-                                sizes="100vw"
-                                priority
-                            />
-                        </motion.div>
-                    )}
-                </AnimatePresence>
-                {/* Heavy Dark overlay for text legibility */}
-                <div className="absolute inset-0 bg-[#0a0a0a]/80 transition-opacity duration-500" />
+/* ── Single card ── */
+function ProjectCard({
+    project,
+    index,
+    onEnter,
+    onLeave,
+}: {
+    project: typeof projects[0];
+    index: number;
+    onEnter: () => void;
+    onLeave: () => void;
+}) {
+    const [hovered, setHovered] = useState(false);
+
+    const handleEnter = () => { setHovered(true); onEnter(); };
+    const handleLeave = () => { setHovered(false); onLeave(); };
+
+    /* Alternate aspect ratios for editorial rhythm */
+    const aspect = index % 3 === 0 ? "3/4" : index % 3 === 1 ? "4/3" : "1/1";
+
+    return (
+        <Link
+            href={project.href}
+            className="work-card group block cursor-none"
+            onMouseEnter={handleEnter}
+            onMouseLeave={handleLeave}
+            aria-label={`View ${project.title}`}
+        >
+            {/* Image container */}
+            <div
+                className="relative w-full overflow-hidden bg-[#f0f0ee]"
+                style={{ aspectRatio: aspect }}
+            >
+                <Image
+                    src={project.image}
+                    alt={project.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 48vw"
+                    className="object-cover transition-transform duration-700 ease-out"
+                    style={{ transform: hovered ? "scale(1.04)" : "scale(1)" }}
+                    loading={index < 2 ? "eager" : "lazy"}
+                    quality={85}
+                />
+
+                {/* Hover overlay */}
+                <div
+                    className="absolute inset-0 bg-black transition-opacity duration-500"
+                    style={{ opacity: hovered ? 0.5 : 0 }}
+                />
+
+                {/* Centered "View Project" text on hover */}
+                <div
+                    className="absolute inset-0 flex items-center justify-center transition-opacity duration-300"
+                    style={{ opacity: hovered ? 1 : 0 }}
+                >
+                    <span className="text-[10px] font-bold tracking-[0.25em] uppercase text-white border border-white/60 px-5 py-2.5">
+                        View Project
+                    </span>
+                </div>
+
+                {/* Video badge */}
+                {project.mediaType === "video" && (
+                    <div className="absolute top-4 right-4">
+                        <span className="text-[8px] tracking-[0.2em] uppercase text-white/60 border border-white/30 px-2 py-1 bg-black/20 backdrop-blur-sm font-sans">
+                            Film
+                        </span>
+                    </div>
+                )}
             </div>
 
-            {/* ── Content Container ── */}
-            <div className="relative z-10 w-full flex flex-col h-full">
-                <div className="w-full flex items-start px-8 pt-10">
-                    <p className="text-[#E8C832] text-[10px] font-bold tracking-[0.3em] uppercase mb-8">
-                        Work
+            {/* Caption below image */}
+            <div className="mt-4 flex items-start justify-between">
+                <div>
+                    <h3 className="font-sans text-black text-sm font-medium tracking-[0.05em] uppercase leading-tight">
+                        {project.title}
+                    </h3>
+                    <p className="font-sans text-black/40 text-[11px] tracking-[0.12em] uppercase mt-1">
+                        {project.category}
+                    </p>
+                </div>
+                <span className="font-mono text-black/25 text-[10px] mt-0.5 shrink-0 ml-4">
+                    {project.number}
+                </span>
+            </div>
+        </Link>
+    );
+}
+
+/* ── Main section ── */
+export default function ProjectSection() {
+    const sectionRef = useRef<HTMLElement>(null);
+    const [cursorVisible, setCursorVisible] = useState(false);
+
+    useEffect(() => {
+        const ctx = gsap.context(() => {
+            gsap.utils.toArray<HTMLElement>(".col-left .work-card").forEach((card, i) => {
+                gsap.fromTo(card,
+                    { opacity: 0, y: 50 },
+                    {
+                        opacity: 1, y: 0, duration: 1, ease: "power3.out",
+                        delay: i * 0.05,
+                        scrollTrigger: { trigger: card, start: "top 90%", toggleActions: "play none none none" },
+                    }
+                );
+            });
+            gsap.utils.toArray<HTMLElement>(".col-right .work-card").forEach((card, i) => {
+                gsap.fromTo(card,
+                    { opacity: 0, y: 65 },
+                    {
+                        opacity: 1, y: 0, duration: 1, ease: "power3.out",
+                        delay: i * 0.05 + 0.12,
+                        scrollTrigger: { trigger: card, start: "top 90%", toggleActions: "play none none none" },
+                    }
+                );
+            });
+            gsap.fromTo(".work-section-heading",
+                { opacity: 0, y: 28 },
+                {
+                    opacity: 1, y: 0, duration: 0.9, ease: "power3.out",
+                    scrollTrigger: { trigger: ".work-section-heading", start: "top 88%" },
+                }
+            );
+        }, sectionRef);
+        return () => ctx.revert();
+    }, []);
+
+    const leftProjects = projects.filter((_, i) => i % 2 === 0);
+    const rightProjects = projects.filter((_, i) => i % 2 !== 0);
+
+    return (
+        <>
+            {/* Cursor only visible when hovering a card — no section-level trigger */}
+            <CursorFollower visible={cursorVisible} />
+
+            <section
+                ref={sectionRef}
+                id="work"
+                className="w-full bg-white py-24 md:py-32"
+            >
+                {/* Section header */}
+                <div className="work-section-heading max-w-7xl mx-auto px-6 md:px-10 lg:px-16 mb-16 md:mb-20 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+                    <div>
+                        <p className="text-[#E8C832] text-[10px] font-bold tracking-[0.35em] uppercase mb-4 font-sans">
+                            Selected Work
+                        </p>
+                        <h2
+                            className="font-display font-light text-black leading-[0.95] tracking-[-0.01em]"
+                            style={{ fontSize: "clamp(2.2rem, 5vw, 4.5rem)" }}
+                        >
+                            Projects that<br />
+                            <em>move people</em>
+                        </h2>
+                    </div>
+                    <p className="text-black/35 text-[11px] font-sans tracking-[0.12em] uppercase max-w-[220px] leading-relaxed">
+                        A curated selection of recent campaigns &amp; creative work.
                     </p>
                 </div>
 
-                {/* List of Projects */}
-                <div className="flex flex-col w-full mt-4">
-                    {projects.map((project, i) => (
-                        <div
-                            key={i}
-                            onMouseEnter={() => setActiveIndex(i)}
-                            onMouseLeave={() => setActiveIndex(null)}
-                            className="group relative w-full flex flex-col md:flex-row md:items-center justify-between py-6 md:py-8 border-b border-white/5 cursor-pointer hover:bg-white/2 transition-colors duration-300 px-8"
-                        >
-                            {/* Left Side: Number + Title */}
-                            {/* Left Side: Number + Title */}
-                            <div className="flex items-center gap-12 md:gap-24">
-                                <span className="text-[#857e30] text-xs font-mono group-hover:text-[#888] transition-colors">
-                                    {project.number}
-                                </span>
+                {/* ── 2-column editorial grid ── */}
+                <div className="max-w-7xl mx-auto px-6 md:px-10 lg:px-16">
 
-                                <div className="flex flex-col">
-                                    <h2 className="text-[#888] font-display group-hover:text-white text-base md:text-xl lg:text-2xl font-light transition-colors duration-300 uppercase tracking-wide">
-                                        {project.title}
-                                    </h2>
-
-                                    {/* Mobile Category */}
-                                    <span className="md:hidden mt-2 text-[#555] text-[10px] tracking-[0.2em] uppercase group-hover:text-[#888] transition-colors">
-                                        {project.category}
-                                    </span>
-                                </div>
-                            </div>
-
-                            {/* Desktop Category */}
-                            <div className="hidden md:flex items-center justify-center text-right">
-                                <span className="text-[#555] text-[10px] md:text-xs tracking-[0.2em] uppercase group-hover:text-[#888] transition-colors">
-                                    {project.category}
-                                </span>
-                            </div>
+                    {/* Desktop */}
+                    <div className="hidden md:grid grid-cols-2 gap-x-10 lg:gap-x-16 items-start">
+                        <div className="col-left flex flex-col gap-14">
+                            {leftProjects.map((p, i) => (
+                                <ProjectCard
+                                    key={p.number}
+                                    project={p}
+                                    index={i * 2}
+                                    onEnter={() => setCursorVisible(true)}
+                                    onLeave={() => setCursorVisible(false)}
+                                />
+                            ))}
                         </div>
-                    ))}
+                        {/* Right column offset down for editorial rhythm */}
+                        <div className="col-right flex flex-col gap-14 mt-32">
+                            {rightProjects.map((p, i) => (
+                                <ProjectCard
+                                    key={p.number}
+                                    project={p}
+                                    index={i * 2 + 1}
+                                    onEnter={() => setCursorVisible(true)}
+                                    onLeave={() => setCursorVisible(false)}
+                                />
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Mobile — single column */}
+                    <div className="flex md:hidden flex-col gap-12">
+                        {projects.map((p, i) => (
+                            <ProjectCard
+                                key={p.number}
+                                project={p}
+                                index={i}
+                                onEnter={() => setCursorVisible(true)}
+                                onLeave={() => setCursorVisible(false)}
+                            />
+                        ))}
+                    </div>
                 </div>
 
-            </div>
-        </section>
+                {/* Bottom CTA */}
+                <div className="max-w-7xl mx-auto px-6 md:px-10 lg:px-16 mt-20 md:mt-24 flex justify-center">
+                    <Link
+                        href="/work"
+                        className="text-[11px] font-bold tracking-[0.22em] uppercase px-8 py-4 border border-black/20 text-black/50 hover:border-black hover:text-black transition-all duration-300 font-sans"
+                    >
+                        View All Projects
+                    </Link>
+                </div>
+            </section>
+        </>
     );
 }

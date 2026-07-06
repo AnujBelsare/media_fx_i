@@ -62,7 +62,7 @@ const fadeUp: Variants = {
 
 export default function ServicesSection() {
   return (
-    <section className="w-full bg-white px-6 md:px-10 lg:px-16 pt-20 pb-10">
+    <section id="services" className="w-full bg-white px-6 md:px-10 lg:px-16 pt-20 pb-10">
       <div className="max-w-7xl mx-auto">
 
         {/* section label */}
@@ -81,6 +81,7 @@ export default function ServicesSection() {
             whileInView="visible"
             viewport={{ once: true, margin: "-50px" }}
             variants={fadeUp}
+            id={service.category}
           >
 
             {/* row */}

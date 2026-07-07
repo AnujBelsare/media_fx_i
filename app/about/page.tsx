@@ -53,7 +53,7 @@ export default function AboutPage() {
                         <p className="text-black/50 font-sans text-sm leading-[1.9] md:pb-2">
                             MediaFXI is a creative agency built for brands that want to move people.
                             We combine strategy, design, and production to create content that
-                            connects — from a single product shoot to a full brand identity.
+                            connects from a single product shoot to a full brand identity.
                         </p>
                     </div>
                 </div>
@@ -105,10 +105,10 @@ export default function AboutPage() {
                             <div>
                                 <p className="text-[10px] tracking-[0.22em] uppercase text-black/30 font-sans mb-2">Email</p>
                                 <a
-                                    href="mailto:belsareanuj2004+work@gmail.com"
+                                    href="mailto:Mediafxi26@gmail.com"
                                     className="text-sm font-sans text-black hover:text-[#E8C832] transition-colors"
                                 >
-                                    belsareanuj2004+work@gmail.com
+                                    Mediafxi26@gmail.com
                                 </a>
                             </div>
 
@@ -116,10 +116,10 @@ export default function AboutPage() {
                             <div>
                                 <p className="text-[10px] tracking-[0.22em] uppercase text-black/30 font-sans mb-2">Phone</p>
                                 <a
-                                    href="tel:+919999999999"
+                                    href="tel:+919422369541"
                                     className="text-sm font-sans text-black hover:text-[#E8C832] transition-colors"
                                 >
-                                    +91 99999 99999
+                                    +91 94223 69541
                                 </a>
                             </div>
 
@@ -127,7 +127,7 @@ export default function AboutPage() {
                             <div>
                                 <p className="text-[10px] tracking-[0.22em] uppercase text-black/30 font-sans mb-2">Instagram</p>
                                 <a
-                                    href="https://instagram.com/mediafxi"
+                                    href="https://www.instagram.com/media_fx_i"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="text-sm font-sans text-black hover:text-[#E8C832] transition-colors"
@@ -139,7 +139,7 @@ export default function AboutPage() {
                             {/* Location */}
                             <div>
                                 <p className="text-[10px] tracking-[0.22em] uppercase text-black/30 font-sans mb-2">Based in</p>
-                                <p className="text-sm font-sans text-black/60">India — working globally</p>
+                                <p className="text-sm font-sans text-black/60">India</p>
                             </div>
                         </div>
                     </div>

@@ -75,10 +75,10 @@ export default function ContactPage() {
                             <div>
                                 <p className="text-[10px] tracking-[0.25em] uppercase text-black/30 font-sans mb-2">Email</p>
                                 <a
-                                    href="mailto:belsareanuj2004+work@gmail.com"
+                                    href="mailto:Mediafxi26@gmail.com"
                                     className="text-sm font-sans text-black hover:text-[#E8C832] transition-colors"
                                 >
-                                    belsareanuj2004+work@gmail.com
+                                    Mediafxi26@gmail.com
                                 </a>
                             </div>
                             <div>
@@ -87,12 +87,12 @@ export default function ContactPage() {
                             </div>
                             <div>
                                 <p className="text-[10px] tracking-[0.25em] uppercase text-black/30 font-sans mb-2">Based in</p>
-                                <p className="text-sm font-sans text-black/60">India — working globally</p>
+                                <p className="text-sm font-sans text-black/60">India</p>
                             </div>
                             <div className="pt-2 border-t border-black/8">
                                 <p className="text-[10px] tracking-[0.25em] uppercase text-black/30 font-sans mb-4 mt-8">Follow</p>
                                 <a
-                                    href="https://instagram.com/mediafxi"
+                                    href="https://instagram.com/media_fx_i"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="text-[11px] tracking-[0.15em] uppercase font-sans text-black/40 hover:text-black transition-colors w-fit"

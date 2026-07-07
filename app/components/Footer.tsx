@@ -13,7 +13,7 @@ const companyLinks = [
 ];
 
 const socialLinks = [
-    { label: "Instagram", href: "https://instagram.com/mediafxi" },
+    { label: "Instagram", href: "https://instagram.com/media_fx_i" },
 ];
 
 export default function Footer() {

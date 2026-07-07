@@ -26,13 +26,9 @@ const projects: Project[] = [
       "Social Media Design",
       "Banner Design",
     ],
-    // Replace with real image: /work/arjuna-agro/cover.webp
-    image: "https://images.unsplash.com/photo-1620706857370-e1b9770e8bb1?w=900&auto=format&fit=crop&q=75",
-    gallery: [
-      "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=900&auto=format&fit=crop&q=75",
-      "https://images.unsplash.com/photo-1556742212-5b321f3c261b?w=900&auto=format&fit=crop&q=75",
-    ],
-    video: "/work/arjuna-agro/showcase.mp4",
+
+    image: "https://res.cloudinary.com/deja36fv7/image/upload/v1783408087/arjuna-agro-cover_xmvxfe.webp",
+    video: "https://res.cloudinary.com/deja36fv7/video/upload/v1783409221/AgroShoot_1_ohnlkm.mov",
     mediaType: "video",
     href: "/work/arjuna-agro",
   },
@@ -49,14 +45,11 @@ const projects: Project[] = [
       "Social Media Design",
       "Marketing Creatives",
     ],
-    // Replace with real image: /work/atmosphere/cover.webp
-    image: "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?w=900&auto=format&fit=crop&q=75",
+    image: "https://res.cloudinary.com/deja36fv7/image/upload/v1783408089/atmosphere-cover_icqfm3.webp",
     gallery: [
-      "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?w=900&auto=format&fit=crop&q=75",
-      "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?w=900&auto=format&fit=crop&q=75",
+      "https://res.cloudinary.com/deja36fv7/image/upload/v1783408086/atmosphere1_pbwv0s.webp",
     ],
-    video: "/work/atmosphere/showreel.mp4",
-    mediaType: "video",
+    mediaType: "image",
     href: "/work/atmosphere",
   },
 
@@ -71,12 +64,9 @@ const projects: Project[] = [
       "Banner Design",
       "Creative Design",
     ],
-    // Replace with real image: /work/kids-and-needs/cover.webp
-    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&auto=format&fit=crop&q=75",
+    image: "https://res.cloudinary.com/deja36fv7/image/upload/v1783408088/kids-and-needs-cover_xwep4b.webp",
     gallery: [
-      "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=900&auto=format&fit=crop&q=75",
-      "https://images.unsplash.com/photo-1560807707-8cc77767d783?w=900&auto=format&fit=crop&q=75",
-      "https://images.unsplash.com/photo-1587654780291-39c9404d746b?w=900&auto=format&fit=crop&q=75",
+      "https://res.cloudinary.com/deja36fv7/image/upload/v1783408088/kids-and-need1_d0eytu.webp",
     ],
     mediaType: "image",
     href: "/work/kids-and-needs",
@@ -94,10 +84,10 @@ const projects: Project[] = [
       "Commercial Photography",
     ],
     // Replace with real image: /work/dhanrova/cover.webp
-    image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=900&auto=format&fit=crop&q=75",
+    image: "https://res.cloudinary.com/deja36fv7/image/upload/v1783408087/dhanrova-cover_jm6rmq.webp",
     gallery: [
-      "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=900&auto=format&fit=crop&q=75",
-      "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=900&auto=format&fit=crop&q=75",
+      "https://res.cloudinary.com/deja36fv7/image/upload/v1783408086/dhanova1_uvzaxa.webp",
+      "https://res.cloudinary.com/deja36fv7/image/upload/v1783408087/dhanrova2_frmcdp.webp",
     ],
     mediaType: "image",
     href: "/work/dhanrova",
@@ -114,13 +104,8 @@ const projects: Project[] = [
       "Video Editing",
       "Motion Graphics",
     ],
-    // Replace with real image: /work/alchemy/cover.webp
-    image: "https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=900&auto=format&fit=crop&q=75",
-    gallery: [
-      "https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=900&auto=format&fit=crop&q=75",
-      "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=900&auto=format&fit=crop&q=75",
-    ],
-    video: "/work/alchemy/product-film.mp4",
+    image: "https://res.cloudinary.com/deja36fv7/image/upload/v1783408085/alchemy-cover_ymv1dh.webp",
+    video: "https://res.cloudinary.com/deja36fv7/video/upload/v1783408326/serumShoot_err2vg.mov",
     mediaType: "video",
     href: "/work/alchemy",
   },

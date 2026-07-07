@@ -9,6 +9,13 @@ import projects from "../data/Project";
 
 gsap.registerPlugin(ScrollTrigger);
 
+/* Keep every card's ratio within a tasteful range so a rare
+   panoramic or ultra-tall photo can't blow up the grid — but
+   the range is wide enough that almost no real photo actually
+   needs to be cropped to fit it. */
+const MIN_RATIO = 0.62; // tall portrait limit
+const MAX_RATIO = 1.65; // wide landscape limit
+
 /* ── Cursor follower — only shown when hovering a card ── */
 function CursorFollower({ visible }: { visible: boolean }) {
     const ref = useRef<HTMLDivElement>(null);
@@ -63,12 +70,27 @@ function ProjectCard({
     onLeave: () => void;
 }) {
     const [hovered, setHovered] = useState(false);
+    const [ratio, setRatio] = useState<number | null>(null);
+    const [loaded, setLoaded] = useState(false);
 
     const handleEnter = () => { setHovered(true); onEnter(); };
     const handleLeave = () => { setHovered(false); onLeave(); };
 
-    /* Alternate aspect ratios for editorial rhythm */
-    const aspect = index % 3 === 0 ? "3/4" : index % 3 === 1 ? "4/3" : "1/1";
+    /* Placeholder ratio shown only until the real image dimensions
+       are known — alternated purely so the pre-load skeleton grid
+       doesn't look uniform/flat. Has no bearing on final crop. */
+    const skeletonRatio = index % 3 === 0 ? 0.75 : index % 3 === 1 ? 1.333 : 1;
+
+    const handleImageLoad = (e: React.SyntheticEvent<HTMLImageElement>) => {
+        const img = e.currentTarget;
+        if (img.naturalWidth && img.naturalHeight) {
+            const natural = img.naturalWidth / img.naturalHeight;
+            setRatio(Math.min(MAX_RATIO, Math.max(MIN_RATIO, natural)));
+        }
+        setLoaded(true);
+    };
+
+    const displayRatio = ratio ?? skeletonRatio;
 
     return (
         <Link
@@ -78,21 +100,31 @@ function ProjectCard({
             onMouseLeave={handleLeave}
             aria-label={`View ${project.title}`}
         >
-            {/* Image container */}
+            {/* Image container — sized to the photo's own proportions
+                once known, so object-cover has nothing left to crop */}
             <div
                 className="relative w-full overflow-hidden bg-[#f0f0ee]"
-                style={{ aspectRatio: aspect }}
+                style={{ aspectRatio: displayRatio, transition: "aspect-ratio 0.4s ease" }}
             >
                 <Image
                     src={project.image}
                     alt={project.title}
                     fill
                     sizes="(max-width: 768px) 100vw, 48vw"
-                    className="object-cover transition-transform duration-700 ease-out"
-                    style={{ transform: hovered ? "scale(1.04)" : "scale(1)" }}
+                    className="object-cover transition-all duration-700 ease-out"
+                    style={{
+                        transform: hovered ? "scale(1.04)" : "scale(1)",
+                        opacity: loaded ? 1 : 0,
+                    }}
                     loading={index < 2 ? "eager" : "lazy"}
                     quality={85}
+                    onLoad={handleImageLoad}
                 />
+
+                {/* Soft shimmer while dimensions/image are still loading */}
+                {!loaded && (
+                    <div className="absolute inset-0 bg-[#e9e9e6] animate-pulse" />
+                )}
 
                 {/* Hover overlay */}
                 <div
@@ -109,15 +141,6 @@ function ProjectCard({
                         View Project
                     </span>
                 </div>
-
-                {/* Video badge */}
-                {project.mediaType === "video" && (
-                    <div className="absolute top-4 right-4">
-                        <span className="text-[8px] tracking-[0.2em] uppercase text-white/60 border border-white/30 px-2 py-1 bg-black/20 backdrop-blur-sm font-sans">
-                            Film
-                        </span>
-                    </div>
-                )}
             </div>
 
             {/* Caption below image */}

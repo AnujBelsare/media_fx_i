@@ -17,7 +17,7 @@ export default function ContactFooter() {
                     className="text-black/40 font-sans font-normal leading-relaxed max-w-2xl"
                     style={{ fontSize: "clamp(0.8rem, 1.2vw, 0.95rem)", letterSpacing: "0.03em" }}
                 >
-                    Let&apos;s Create Something Meaningful Together — From Strategy And Design To Content
+                    Let&apos;s Create Something Meaningful Together From Strategy And Design To Content
                     And Digital Experiences That Leave A Lasting Impact.
                 </p>
 

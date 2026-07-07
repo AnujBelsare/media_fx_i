@@ -11,6 +11,13 @@ import projects from "../data/Project";
 
 gsap.registerPlugin(ScrollTrigger);
 
+/* Keep every card's ratio within a tasteful range so a rare
+   panoramic or ultra-tall photo can't blow up the grid — but
+   the range is wide enough that almost no real photo actually
+   needs to be cropped to fit it. */
+const MIN_RATIO = 0.62; // tall portrait limit
+const MAX_RATIO = 1.65; // wide landscape limit
+
 export default function WorkPage() {
     const ref = useRef<HTMLDivElement>(null);
     const [cursorVisible, setCursorVisible] = useState(false);
@@ -97,6 +104,24 @@ function WorkCard({ project, index, onEnter, onLeave }: {
     onLeave: () => void;
 }) {
     const [hovered, setHovered] = useState(false);
+    const [ratio, setRatio] = useState<number | null>(null);
+    const [loaded, setLoaded] = useState(false);
+
+    /* Placeholder ratio shown only until the real image dimensions
+       are known — alternated purely so the pre-load skeleton grid
+       doesn't look uniform/flat. Has no bearing on final crop. */
+    const skeletonRatio = index % 3 === 0 ? 0.75 : index % 3 === 1 ? 1.333 : 1;
+
+    const handleImageLoad = (e: React.SyntheticEvent<HTMLImageElement>) => {
+        const img = e.currentTarget;
+        if (img.naturalWidth && img.naturalHeight) {
+            const natural = img.naturalWidth / img.naturalHeight;
+            setRatio(Math.min(MAX_RATIO, Math.max(MIN_RATIO, natural)));
+        }
+        setLoaded(true);
+    };
+
+    const displayRatio = ratio ?? skeletonRatio;
 
     return (
         <Link
@@ -108,18 +133,28 @@ function WorkCard({ project, index, onEnter, onLeave }: {
         >
             <div
                 className="relative w-full overflow-hidden bg-[#f5f5f3]"
-                style={{ aspectRatio: index % 3 === 0 ? "3/4" : index % 3 === 1 ? "4/3" : "1/1" }}
+                style={{ aspectRatio: displayRatio, transition: "aspect-ratio 0.4s ease" }}
             >
                 <Image
                     src={project.image}
                     alt={project.title}
                     fill
                     sizes="(max-width: 768px) 100vw, 48vw"
-                    className="object-cover transition-transform duration-700 ease-out"
-                    style={{ transform: hovered ? "scale(1.04)" : "scale(1)" }}
+                    className="object-cover transition-all duration-700 ease-out"
+                    style={{
+                        transform: hovered ? "scale(1.04)" : "scale(1)",
+                        opacity: loaded ? 1 : 0,
+                    }}
                     loading={index < 2 ? "eager" : "lazy"}
                     quality={85}
+                    onLoad={handleImageLoad}
                 />
+
+                {/* Soft shimmer while dimensions/image are still loading */}
+                {!loaded && (
+                    <div className="absolute inset-0 bg-[#eaeae7] animate-pulse" />
+                )}
+
                 <div
                     className="absolute inset-0 bg-black transition-opacity duration-500"
                     style={{ opacity: hovered ? 0.5 : 0 }}
@@ -132,13 +167,6 @@ function WorkCard({ project, index, onEnter, onLeave }: {
                         View Project
                     </span>
                 </div>
-                {project.mediaType === "video" && (
-                    <div className="absolute top-4 right-4">
-                        <span className="text-[8px] tracking-[0.2em] uppercase text-white/60 border border-white/30 px-2 py-1 bg-black/20 backdrop-blur-sm">
-                            Film
-                        </span>
-                    </div>
-                )}
             </div>
             <div className="mt-4 flex items-start justify-between">
                 <div>

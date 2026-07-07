@@ -1,8 +1,9 @@
 import { notFound } from "next/navigation";
-import Image from "next/image";
 import Link from "next/link";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
+import AspectImage from "../../components/AspectImage";
+import AspectVideo from "../../components/AspectVideo";
 import projects from "../../data/Project";
 
 interface Props {
@@ -61,19 +62,19 @@ export default async function WorkDetailPage({ params }: Props) {
                         </div>
                     </div>
 
-                    {/* Cover image — full width, natural height */}
+                    {/* Cover image — sized to its own proportions, never cropped to a forced 16:9 */}
                     <div className="max-w-7xl mx-auto px-6 md:px-10 lg:px-16">
-                        <div className="relative w-full overflow-hidden bg-[#eee]" style={{ aspectRatio: "16/9" }}>
-                            <Image
-                                src={project.image}
-                                alt={project.title}
-                                fill
-                                className="object-cover"
-                                sizes="(max-width: 1280px) 100vw, 1280px"
-                                priority
-                                quality={90}
-                            />
-                        </div>
+                        <AspectImage
+                            src={project.image}
+                            alt={project.title}
+                            sizes="(max-width: 1280px) 100vw, 1280px"
+                            priority
+                            quality={90}
+                            minRatio={1.3}
+                            maxRatio={2.4}
+                            fallbackRatio={16 / 9}
+                            bg="#eee"
+                        />
                     </div>
                 </div>
 
@@ -107,21 +108,15 @@ export default async function WorkDetailPage({ params }: Props) {
                         {/* 2-col masonry-style grid */}
                         <div className="grid md:grid-cols-2 gap-4 md:gap-6">
                             {allImages.slice(1).map((src, i) => (
-                                <div
+                                <AspectImage
                                     key={i}
-                                    className="relative overflow-hidden bg-[#f5f5f3]"
-                                    style={{ aspectRatio: i % 3 === 0 ? "4/3" : i % 3 === 1 ? "3/4" : "1/1" }}
-                                >
-                                    <Image
-                                        src={src}
-                                        alt={`${project.title} — image ${i + 2}`}
-                                        fill
-                                        className="object-cover"
-                                        sizes="(max-width: 768px) 100vw, 50vw"
-                                        loading="lazy"
-                                        quality={80}
-                                    />
-                                </div>
+                                    src={src}
+                                    alt={`${project.title} — image ${i + 2}`}
+                                    sizes="(max-width: 768px) 100vw, 50vw"
+                                    quality={80}
+                                    fallbackRatio={i % 3 === 0 ? 4 / 3 : i % 3 === 1 ? 3 / 4 : 1}
+                                    bg="#f5f5f3"
+                                />
                             ))}
                         </div>
                     </div>
@@ -131,14 +126,7 @@ export default async function WorkDetailPage({ params }: Props) {
                 {project.video && (
                     <div className="max-w-7xl mx-auto px-6 md:px-10 lg:px-16 pb-16 md:pb-20">
                         <p className="text-[10px] tracking-[0.25em] uppercase text-black/30 font-sans mb-6">Project Film</p>
-                        <video
-                            src={project.video}
-                            poster={project.image}
-                            controls
-                            playsInline
-                            className="w-full aspect-video object-cover bg-black"
-                            preload="metadata"
-                        />
+                        <AspectVideo src={project.video} poster={project.image} />
                     </div>
                 )}
 
@@ -150,17 +138,15 @@ export default async function WorkDetailPage({ params }: Props) {
                             <div className="grid md:grid-cols-2 gap-6">
                                 {others.map((p) => (
                                     <Link key={p.number} href={p.href} className="group block">
-                                        <div className="relative overflow-hidden bg-[#eee]" style={{ aspectRatio: "4/3" }}>
-                                            <Image
-                                                src={p.image}
-                                                alt={p.title}
-                                                fill
-                                                className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-                                                sizes="(max-width: 768px) 100vw, 50vw"
-                                                loading="lazy"
-                                                quality={75}
-                                            />
-                                        </div>
+                                        <AspectImage
+                                            src={p.image}
+                                            alt={p.title}
+                                            sizes="(max-width: 768px) 100vw, 50vw"
+                                            quality={75}
+                                            fallbackRatio={4 / 3}
+                                            bg="#eee"
+                                            imageClassName="group-hover:scale-[1.04]"
+                                        />
                                         <div className="mt-4 flex items-start justify-between">
                                             <div>
                                                 <h3 className="font-sans text-black text-sm font-medium tracking-[0.05em] uppercase">{p.title}</h3>

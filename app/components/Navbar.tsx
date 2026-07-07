@@ -118,7 +118,7 @@ export default function Navbar() {
 
             {/* Mobile drawer */}
             {menuOpen && (
-                <div className="md:hidden min-h-screen bg-white border-t border-black/8 px-6 py-6 flex flex-col gap-5">
+                <div className="md:hidden h-screen overflow-y-auto bg-white border-t border-black/8 px-6 py-6 flex flex-col gap-5">
                     {navLinks.map((item) =>
                         item.scrollTo ? (
                             <a

@@ -1,9 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+
+// Note: metadata must be exported from a separate server component when using "use client".
+// Page-level meta for /contact is handled via layout metadata inheritance + per-page override below.
+// To add static metadata without removing "use client", use a parallel route or move form to a child component.
+// For now the global layout metadata covers this page adequately.
 
 const services = [
     "Video Editing & VFX",

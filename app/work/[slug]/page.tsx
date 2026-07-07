@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Navbar from "../../components/Navbar";
@@ -12,6 +13,25 @@ interface Props {
 
 export async function generateStaticParams() {
     return projects.map((p) => ({ slug: p.href.replace("/work/", "") }));
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+    const { slug } = await params;
+    const project = projects.find((p) => p.href === `/work/${slug}`);
+    if (!project) return {};
+
+    const url = `https://www.mediafxi.in/work/${slug}`;
+    return {
+        title: project.title,
+        description: project.description,
+        alternates: { canonical: url },
+        openGraph: {
+            url,
+            title: `${project.title} — MediaFXI`,
+            description: project.description,
+            images: [{ url: project.image, alt: project.title }],
+        },
+    };
 }
 
 export default async function WorkDetailPage({ params }: Props) {

@@ -35,7 +35,7 @@ export default function HeroSection() {
                     >
                         We build digital<br />
                         <span className="relative inline-block">
-                            that moves.
+                            that move.
                         </span>
                     </h1>
 

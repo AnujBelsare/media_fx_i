@@ -1,6 +1,20 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+
+export const metadata: Metadata = {
+  title: "About Us",
+  description:
+    "MediaFXI is a creative agency built for brands that want to move people. We combine strategy, design, and production — from product shoots to full brand identities.",
+  alternates: { canonical: "https://www.mediafxi.in/about" },
+  openGraph: {
+    url: "https://www.mediafxi.in/about",
+    title: "About MediaFXI",
+    description:
+      "Creative agency combining strategy, design, and production for brands that want to stand out.",
+  },
+};
 
 const values = [
     {

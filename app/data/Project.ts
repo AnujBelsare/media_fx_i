@@ -18,7 +18,7 @@ const projects: Project[] = [
     number: "01",
     title: "Arjuna Agro",
     description:
-      "Comprehensive visual content production including product photography, commercial video shoots, social media creatives, and promotional banners to strengthen brand presence across digital platforms.",
+      "A full production run for an agriculture and FMCG brand: product photography, a commercial video shoot, and the social and banner creative needed to carry that visual identity across every platform.",
     category: "Agriculture & FMCG",
     services: [
       "Product Photography",
@@ -26,21 +26,18 @@ const projects: Project[] = [
       "Social Media Design",
       "Banner Design",
     ],
-
     image: "https://res.cloudinary.com/deja36fv7/image/upload/v1783408087/arjuna-agro-cover_xmvxfe.webp",
     video: "https://res.cloudinary.com/deja36fv7/video/upload/v1783409221/AgroShoot_1_ohnlkm.mov",
     mediaType: "video",
     href: "/work/arjuna-agro",
   },
-
   {
     number: "02",
     title: "Atmosphere",
     description:
-      "Creative content strategy and production featuring professional video shoots, social media campaigns, branded post designs, and marketing banners tailored for audience engagement.",
-    category: "Lifestyle Brand",
+      "A content engine for a restaurant brand: social campaigns, menu promotions, and branded content designed to create a memorable dining experience while maintaining a consistent visual identity across every customer touchpoint.",
+    category: "Restaurant",
     services: [
-      "Video Production",
       "Content Creation",
       "Social Media Design",
       "Marketing Creatives",
@@ -52,12 +49,11 @@ const projects: Project[] = [
     mediaType: "image",
     href: "/work/atmosphere",
   },
-
   {
     number: "03",
     title: "Kids & Needs",
     description:
-      "Designed engaging social media posts and promotional banners focused on improving brand communication and creating a playful yet professional visual identity.",
+      "Social and promotional design for a kids' retail brand — playful enough to stand out in a feed, polished enough to hold the trust a retail audience expects.",
     category: "Kids & Retail",
     services: [
       "Social Media Posts",
@@ -71,19 +67,17 @@ const projects: Project[] = [
     mediaType: "image",
     href: "/work/kids-and-needs",
   },
-
   {
     number: "04",
     title: "Dhanrova",
     description:
-      "Professional product photography project highlighting product details, textures, and premium presentation for digital marketing and catalog use.",
+      "Studio product photography built to hold up in a catalog: controlled lighting, true-to-product color, and compositions that keep the detail and texture a premium listing needs.",
     category: "Product Photography",
     services: [
       "Product Photography",
       "Creative Direction",
       "Commercial Photography",
     ],
-    // Replace with real image: /work/dhanrova/cover.webp
     image: "https://res.cloudinary.com/deja36fv7/image/upload/v1783408087/dhanrova-cover_jm6rmq.webp",
     gallery: [
       "https://res.cloudinary.com/deja36fv7/image/upload/v1783408086/dhanova1_uvzaxa.webp",
@@ -92,12 +86,11 @@ const projects: Project[] = [
     mediaType: "image",
     href: "/work/dhanrova",
   },
-
   {
     number: "05",
     title: "Alchemy",
     description:
-      "Produced high-impact product videos focused on storytelling, motion, and product presentation to elevate brand perception and drive customer engagement.",
+      "A serum launch told through motion: a product video shoot built around texture and light, cut and finished with motion graphics that give the formula room to breathe on screen.",
     category: "Product Marketing",
     services: [
       "Product Video Shoot",
